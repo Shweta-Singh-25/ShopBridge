@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ShopBridge.Models.clsProduct>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <style>
+        div.productstyle {
+            margin: 5px;
+            border: 1px solid #ccc;
+            float:left;
+            width: 450px;
+            background-color:azure;
+            padding-left:10px;
+            padding-right:10px;
+            padding-top:10px;
+            padding-bottom:10px;
+        }
+
+         div.productstyle:hover {
+             border: 1px solid #777;
+         }
+         div.productstyle {
+             padding: 15px;
+             text-align: center;
+         }
+         .center{
+            width: 150px;
+            margin: 40px auto;
+
+         }
+    </style>
+<div class="jumbotron">
+    <h2>Products</h2>
+</div>
+<div id="productList">
+    @foreach(var item in Model)
+    {
+    <div class="productstyle">
+        <h4>@Html.DisplayFor(modelItem => item.Product)</h4>
+        <h3>@Html.DisplayFor(modelItem => item.ProductDesc)</h3>
+        <p id="productStatus">@Html.DisplayFor(modelItem => item.ProductStatus)</p>
+        <div class="input-group" style="width: 130px;float:left;">
+            <span class="input-group-btn">
+                <button type="button" id="btnMinus_@Html.DisplayFor(modelItem => item.ID)" class="btn btn-danger btn-number" data-type="minus" data-field="qty">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+            </span>
+            <input type="text" name="qty" id="qty_@Html.DisplayFor(modelItem => item.ID)" class="form-control input-number" value="0" min="0" max="100">
+            <span class="input-group-btn">
+                <button type="button" id="btnPlus_@Html.DisplayFor(modelItem => item.ID)" class="btn btn-success btn-number" data-type="plus" data-field="qty">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </span>
+        </div>
+        <div style="float:right;">
+            <button type="button" id="addCart_@Html.DisplayFor(modelItem => item.ID)" class="btn btn-warning" onclick="onClickAddCart(this.id)">
+                Add to Cart🛒
+            </button>
+        </div>
+    </div>
+    }
+</div>
+<script type="text/javascript" src="~/Scripts/CustomJS/Home.js"></script>

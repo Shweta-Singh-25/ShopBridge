@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ShopBridge.Models.clsCart>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<style>
+    div.productstyle {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 600px;
+        background-color:beige;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+        div.productstyle:hover {
+            border: 1px solid #777;
+        }
+
+    div.productstyle {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .center {
+        width: 150px;
+        margin: 40px auto;
+    }
+</style>
+<div class="jumbotron">
+    <h2>My Cart 🛒</h2>
+</div>
+<div>
+    @foreach (var item in Model)
+    {
+        
+    <div class="productstyle row">
+        <div class="col-lg-3">
+            <h4>@Html.DisplayFor(modelItem => item.Product)</h4>
+            <h3>@Html.DisplayFor(modelItem => item.ProductDesc)</h3>
+            <span style="font-size:medium;">Units: @Html.DisplayFor(modelItem => item.UnitsAdded)</span>
+        </div>
+        <div class="col-lg-5">
+
+            @if (item.IsDiscountApplicable == "Discount Applied!")
+            {
+                <div class="row">
+                    <span class="col-lg-6" id="originalPrice_@Html.DisplayFor(modelItem => item.ID)" style="text-decoration:line-through;font-size:medium;">Rs.@Html.DisplayFor(modelItem => item.OriginalPrice)</span>
+                    <span class="col-lg-6" id="productDiscount_@Html.DisplayFor(modelItem => item.ID)" style="color:maroon;font-size:small;">-Rs.@Html.DisplayFor(modelItem => item.ProductDiscount)</span>
+                    </div>
+                    }
+                    <div class="row">
+                        <p class="col-lg-6">Final Price:</p>
+                        <span id="priceToPay_@Html.DisplayFor(modelItem => item.ID)" class="col-lg-6" style="color:green;font-size:large;">Rs.@Html.DisplayFor(modelItem => item.PriceToPay)</span>
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <p id="isDiscountapplicable_@Html.DisplayFor(modelItem => item.ID)">@Html.DisplayFor(modelItem => item.IsDiscountApplicable)</p>
+
+                    <div class="pt-2" style="float:right;">
+                        <button type="button" id="removeFromCart_@Html.DisplayFor(modelItem => item.ID)" class="btn btn-danger" onclick="onClickRemoveFromCart(this.id)">
+                            Remove from Cart🗑️
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+<div class="row">
+    @if (ViewBag.CartDiscount > 0)
+    {
+        <p class="col-lg-6" style="font-size:large;font-style:oblique;font-weight:bold;color:darkgoldenrod;">Cart Discount Applied: -Rs. @ViewBag.CartDiscount</p>
+    }
+    <p class="col-lg-6" style="font-size:xx-large;font-style:oblique;font-weight:bolder;">Grand Total: Rs. @ViewBag.GrandTotal</p>
+
+</div>
+    </div>
+<script type="text/javascript" src="~/Scripts/CustomJS/Cart.js"></script>
